@@ -1,0 +1,155 @@
+swagger: '2.0'
+info:
+  description: This is a simple API
+  version: 1.0.0
+  title: smbf API
+  # put the contact info for your development or API team
+  contact:
+    email: heshoots9999@gmail.com
+
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+
+paths:
+  /events:
+    get:
+      summary: get multiple events
+      operationId: searchEvents
+      description: |
+        Get list of events
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: api_key
+        description: Facebook api key
+        required: true
+        type: string
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Event'
+        400:
+          description: bad input parameter
+  /events/{id}:
+    get:
+      summary: get specific event
+      operationId: getEvent
+      description: |
+        search for event with challonge tournaments
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: api_key
+        description: Facebook api key
+        required: true
+        type: string
+      - name: id
+        in: path
+        description: id of event
+        required: true
+        type: string
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            $ref: '#/definitions/Event'
+        400:
+          description: bad input parameter
+  /tournaments:
+    get:
+      summary: get multiple tournament
+      operationId: searchTournaments
+      description: |
+        get tournaments from api
+      produces:
+      - application/json
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Tournament'
+        400:
+          description: bad input parameter
+  /tournaments/{id}:
+    get:
+      summary: get specific tournament
+      operationId: getTournament
+      description: |
+        Access values for a tournament by id
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: id of event
+        required: true
+        type: string
+      responses:
+        200:
+          description: returning tournament
+          schema:
+            $ref: '#/definitions/Tournament'
+        400:
+          description: bad input parameter
+definitions:
+  Event:
+    type: object
+    required:
+    - id
+    - name
+    properties:
+      id:
+        type: string
+        format: int32
+        example: 476564289474918
+      name:
+        type: string
+        example: Widget Adapter
+      start_time:
+        type: string
+        format: int32
+        example: 2016-08-29T09:12:33.001Z
+      end_time:
+        type: string
+        format: int32
+        example: 2016-08-29T09:12:33.001Z
+      attending_count:
+        type: integer
+        example: 12
+      tournaments:
+        type: array
+        items:
+          $ref: '#/definitions/Tournament'
+  Tournament:
+    required:
+    - id
+    - name
+    - full_challonge_url
+    properties:
+      id:
+        type: integer
+        format: int32
+        example: 8342251
+      name:
+        type: string
+        example: ww345SFV
+      game_name:
+        type: string
+        example: Street Fighter V
+      full_challonge_url:
+        type: string
+        format: url
+        example:  https://www.acme-corp.com
+# Added by API Auto Mocking Plugin
+host: brackets.superminerbattle.farm
+basePath: /api/1.0.0
+schemes:
+ - http
