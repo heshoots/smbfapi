@@ -72,3 +72,23 @@ func GetTournamentsForDate(date time.Time) (models []*models.Tournament, err err
 	}
 	return models, nil
 }
+
+func GetTournamentDateMap() (map[string][]*models.Tournament, error) {
+	tournaments, err := GetTournaments()
+	if err != nil {
+		return nil, err
+	}
+	tournamentMap := make(map[string][]*models.Tournament)
+	for _, tournament := range tournaments {
+		start, err := time.Parse("2006-01-02T15:04:05.000-07:00", tournament.CreatedAt)
+		if err == nil {
+			formatted := start.Format("2006-01-02")
+			if val, ok := tournamentMap[formatted]; ok {
+				tournamentMap[formatted] = append(val, tournament)
+			} else {
+				tournamentMap[formatted] = []*models.Tournament{tournament}
+			}
+		}
+	}
+	return tournamentMap, nil
+}

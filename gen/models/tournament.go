@@ -17,6 +17,9 @@ import (
 // swagger:model Tournament
 type Tournament struct {
 
+	// created at
+	CreatedAt string `json:"created_at,omitempty"`
+
 	// full challonge url
 	// Required: true
 	FullChallongeURL *string `json:"full_challonge_url"`

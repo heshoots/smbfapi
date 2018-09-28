@@ -32,5 +32,22 @@ func SearchEventsHandler(params operations.SearchEventsParams) middleware.Respon
 		fmt.Println(err)
 		return operations.NewSearchEventsBadRequest()
 	}
+	tournamentMap, err := challonge.GetTournamentDateMap()
+	if err != nil {
+		fmt.Println(err)
+		return operations.NewSearchEventsOK().WithPayload(response)
+	}
+	for _, event := range response {
+		eventStart, err := time.Parse("2006-01-02T15:04:05-0700", event.StartTime)
+		if err != nil {
+			fmt.Println("couldn't parse event date", err)
+		}
+		formatted := eventStart.Format("2006-01-02")
+		if err == nil {
+			if val, ok := tournamentMap[formatted]; ok {
+				event.Tournaments = val
+			}
+		}
+	}
 	return operations.NewSearchEventsOK().WithPayload(response)
 }

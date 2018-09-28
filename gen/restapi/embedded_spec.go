@@ -208,6 +208,11 @@ func init() {
         "full_challonge_url"
       ],
       "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "int32",
+          "example": "2018-09-09T12:28:16.031Z"
+        },
         "full_challonge_url": {
           "type": "string",
           "format": "url",
@@ -421,6 +426,11 @@ func init() {
         "full_challonge_url"
       ],
       "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "int32",
+          "example": "2018-09-09T12:28:16.031Z"
+        },
         "full_challonge_url": {
           "type": "string",
           "format": "url",
